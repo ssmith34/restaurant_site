@@ -40,6 +40,7 @@ const Cart = props => {
 		);
 		setIsSubmitting(false);
 		setDidSubmit(true);
+		cartCtx.clearCart();
 	};
 
 	const cartItems = (
@@ -84,15 +85,26 @@ const Cart = props => {
 		</Fragment>
 	);
 
-	const isSubmittingModalContent =  <p>Sending order data...</p>
+	const isSubmittingModalContent = <p>Sending order data...</p>;
 
-	const didSubmitModalContent = <p>Success! You're order is on it's way!</p>
+	const didSubmitModalContent = (
+		<Fragment>
+			<p>Success! You're order is on it's way!</p>
+			<div className={styles.actions}>
+				<button className={styles.button} onClick={props.onClose}>
+					Close
+				</button>
+			</div>
+		</Fragment>
+	);
 
-	return <Modal onClose={props.onClose}>
-		{!isSubmitting && !didSubmit && cartModalContent}
-		{isSubmitting && isSubmittingModalContent}
-		{!isSubmitting && didSubmit && didSubmitModalContent}
-	</Modal>;
+	return (
+		<Modal onClose={props.onClose}>
+			{!isSubmitting && !didSubmit && cartModalContent}
+			{isSubmitting && isSubmittingModalContent}
+			{!isSubmitting && didSubmit && didSubmitModalContent}
+		</Modal>
+	);
 };
 
 export default Cart;
